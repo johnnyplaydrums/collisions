@@ -4,3 +4,4 @@ data/
 metastore_db/
 derby.log
 data_exploration_MH/spark
+data_exploration_MH/bike_taxi.csv
