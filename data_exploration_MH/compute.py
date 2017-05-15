@@ -42,3 +42,5 @@ if __name__=='__main__':
     jan_april = aprilTrips.join(jan_march).reduceByKey(lambda x,y: x+y).mapValues(lambda x: x[0]+x[1])
     jan_may = mayTrips.join(jan_april).reduceByKey(lambda x,y: x+y).mapValues(lambda x: x[0]+x[1])
     jan_june = juneTrips.join(jan_may).reduceByKey(lambda x,y: x+y).mapValues(lambda x: x[0]+x[1])
+
+    jan_june.take(15)
