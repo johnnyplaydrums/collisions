@@ -1,3 +1,6 @@
+# Spark submit command
+#spark-submit --name "bike_taxi" --files hdfs:///user/jspence01/collisions/march.csv,hdfs:///user/jspence01/collisions/april.csv,hdfs:///user/jspence01/collisions/may.csv,hdfs:///user/jspence01/collisions/june.csv,hdfs:///user/jspence01/collisions/february.csv,hdfs:///user/jspence01/collisions/january.csv hdfs:///user/jspence01/collisions/compute.py
+
 import pyspark
 import csv
 
@@ -29,13 +32,13 @@ if __name__=='__main__':
 
     sc = pyspark.SparkContext()
 
-    collisions = '/user/jspence01/collisions/collisions.csv'
-    januaryTrips = '/user/jspence01/collisions/1january.csv'
-    febTrips = 'users/jspence01/collisions/2february.csv'
-    marchTrips = '/user/jspence01/collisions/3march.csv'
-    aprilTrips = '/user/jspence01/collisions/4april.csv'
-    mayTrips = '/user/jspence01/collisions/5may.csv'
-    juneTrips = '/user/jspence01/collisions/6june.csv'
+    collisions = 'hdfs:///user/jspence01/collisions/collisions.csv'
+    janTrips = 'hdfs:///user/jspence01/collisions/january.csv'
+    febTrips = 'hdfs:///users/jspence01/collisions/february.csv'
+    marchTrips = 'hdfs:///user/jspence01/collisions/march.csv'
+    aprilTrips = 'hdfs:///user/jspence01/collisions/april.csv'
+    mayTrips = 'hdfs:///user/jspence01/collisions/may.csv'
+    juneTrips = 'hdfs:///user/jspence01/collisions/june.csv'
 
     janTrips = sc.textFile(janTrips,use_unicode=False).cache()
     febTrips = sc.textFile(febTrips,use_unicode=False).cache()
