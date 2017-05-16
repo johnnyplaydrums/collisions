@@ -34,7 +34,7 @@ if __name__=='__main__':
 
     collisions = 'hdfs:///user/jspence01/collisions/collisions.csv'
     janTrips = 'hdfs:///user/jspence01/collisions/january.csv'
-    febTrips = 'hdfs:///users/jspence01/collisions/february.csv'
+    febTrips = 'hdfs:///user/jspence01/collisions/february.csv'
     marchTrips = 'hdfs:///user/jspence01/collisions/march.csv'
     aprilTrips = 'hdfs:///user/jspence01/collisions/april.csv'
     mayTrips = 'hdfs:///user/jspence01/collisions/may.csv'
@@ -46,6 +46,7 @@ if __name__=='__main__':
     aprilTrips = sc.textFile(aprilTrips,use_unicode=False).cache()
     mayTrips = sc.textFile(mayTrips,use_unicode=False).cache()
     juneTrips = sc.textFile(juneTrips,use_unicode=False).cache()
+    collisions = sc.textFile(collisions,use_unicode=False).cache()
 
     janTrips = janTrips.mapPartitionsWithIndex(extractTrips).reduceByKey(lambda x,y: x+y)
     febTrips = febTrips.mapPartitionsWithIndex(extractTrips).reduceByKey(lambda x,y: x+y)
