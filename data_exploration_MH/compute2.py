@@ -11,8 +11,8 @@ def extractTrips(partitionId,partition):
     reader = csv.reader(partition)
     for row in reader:
         if row[1] and row[2] !='0' and row[6] and row [7] != '0':
-            pickup = row[1],row[2]
-            dropoff = row[6],row[7]
+            pickup = row[1][0:6],row[2][0:7]
+            dropoff = row[6][0:6],row[7][0:7]
             yield (pickup,1)
             yield (dropoff,1)
 
@@ -23,7 +23,7 @@ def extractCyclists(partitionId,partition):
     reader = csv.reader(partition)
     for row in reader:
         if row[14]!= '' and row[14] != '0':
-            lat = row[6].split(',')[0][1:9] + '' , '' + row[6].split(',')[1][0:9]
+            lat = row[6].split(',')[0][1:7] + '' , '' + row[6].split(',')[1][0:7]
             injured = int(row[14]) + int(row[15])    # includes injury and death
             yield (lat),injured
 
@@ -64,9 +64,10 @@ if __name__=='__main__':
     jan_june = juneTrips.join(jan_may).mapValues(lambda x: x[0]+x[1])
 
 
-    # cyclistAccidents = collisions.mapPartitionsWithIndex(extractCyclists).reduceByKey(lambda x,y: x+y)
-    # total_data = jan_june.join(cyclistAccidents).collect()
-    total_data = jan_june.count()
+    cyclistAccidents = collisions.mapPartitionsWithIndex(extractCyclists).reduceByKey(lambda x,y: x+y)
+    total_data = jan_june.join(cyclistAccidents).collect()
+    taxi_count = jan_june.count()
+    print taxi_count
     print total_data
     # with open('hdfs:///user/mhendri000/bike_taxi.csv', 'wb') as myfile:
     #     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
