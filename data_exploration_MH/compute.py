@@ -27,6 +27,8 @@ def extractCyclists(partitionId,partition):
             injured = int(row[14]) + int(row[15])    # includes injury and death
             yield (lat),injured
 
+def toCSVLine(data):
+    return ','.join(str(d) for d in data)
 
 if __name__=='__main__':
 
@@ -63,4 +65,12 @@ if __name__=='__main__':
 
 
     cyclistAccidents = collisions.mapPartitionsWithIndex(extractCyclists).reduceByKey(lambda x,y: x+y)
-    jan_june.join(cyclistAccidents).collect()
+    total_data = jan_june.join(cyclistAccidents).collect()
+    print total_data
+    # with open('hdfs:///user/mhendri000/bike_taxi.csv', 'wb') as myfile:
+    #     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    #     for i in range (0,len(total_data)):
+    #         wr.writerow(total_data[i])
+
+    # lines = total_data.map(toCSVLine)
+    # lines.saveAsTextFile('hdfs:///user/mhendri000/trips_injuries.csv')
